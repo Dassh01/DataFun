@@ -30,13 +30,13 @@ public class DataFun extends beaUtils {
             isGreaterThan = "";
         }
         else if (integer <= 100) {
-            isGreaterThan = ","+CHOSEN_COLOR + "\nit is greater then 10" + RESET;
+            isGreaterThan = ",\nit is" + CHOSEN_COLOR + " greater then 10" + RESET;
         }
         else if (integer <= 1000) {
-            isGreaterThan = ",\nit is " + CHOSEN_COLOR + "greater then 100" + RESET;
+            isGreaterThan = ",\nit is" + CHOSEN_COLOR + " greater then 100" + RESET;
         }
         else {
-            isGreaterThan = CHOSEN_COLOR + ",\nit is greater then 1000" + RESET;
+            isGreaterThan = ",\nit is" + CHOSEN_COLOR +  " greater then 1000" + RESET;
         }
 
         isNobleGas = switch (integer) {
@@ -100,11 +100,9 @@ public class DataFun extends beaUtils {
 
     private static String pollForColor() {
         String color;
-        String colorLowercase;
 
-        color = askForThing("Enter a color to act as a theme (EX: Blue, red, GREEN):", Scanner::next, scanner);
-        colorLowercase = color.toLowerCase();
-        color = switch (colorLowercase) {
+        color = askForThing("Enter a color to act as a theme, \n(AVAILABLE: Red, Green, Yellow, Blue, Purple, Cyan, White):", Scanner::next, scanner);
+        color = switch (color.trim().toLowerCase()) {
             case "red" -> RED;
             case "green" -> GREEN;
             case "yellow" -> YELLOW;
