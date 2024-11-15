@@ -15,9 +15,19 @@ public class DataFun extends beaUtils {
     public static final String BLUE = "\033[0;34m";
     public static final String PURPLE = "\033[0;35m";
     public static final String CYAN = "\033[0;36m";
-    public static final String WHITE = "\033[0;37m";
+    public static final String GREY = "\033[0;37m";
 
-    private static void partOne(int integer, String CHOSEN_COLOR) {
+    /**
+     * Handles the first part of the DataFun project
+     * @param integer User's 'favorite integer'
+     * @param CHOSEN_COLOR User's chosen color theme
+     * @return Compiled string as per favorite integer reqs
+     */
+    private static String partOne(int integer, String CHOSEN_COLOR) {
+        //Declare variables
+
+        //Scope obfuscation?
+        //What even is that! :)
         String isPositiveOrNegative;
         String isGreaterThan;
         String isOddOrEven;
@@ -48,11 +58,18 @@ public class DataFun extends beaUtils {
             case 86 -> "the noble gas" + CHOSEN_COLOR + "Radon" + RESET;
             default -> CHOSEN_COLOR + "not" + RESET + " the atomic number of a noble gas";
         };
-
-        System.out.println(integer + " is a "+ isPositiveOrNegative + " number"+isGreaterThan+",\nit is "+isOddOrEven+",\nand it is "+isNobleGas+"\n");
+        //Compiled string here
+        return (integer + " is a "+ isPositiveOrNegative + " number"+isGreaterThan+",\nit is "+isOddOrEven+",\nand it is "+isNobleGas+"\n");
     }
 
-    private static void partTwo(char character, String CHOSEN_COLOR) {
+    /**
+     * Handles the second part of the DataFun project
+     * @param character User's 'favorite character'
+     * @param CHOSEN_COLOR User's chosen color theme
+     * @return Compiled string as per part 2's reqs
+     */
+    private static String partTwo(char character, String CHOSEN_COLOR) {
+        //Declare variables
         final char characterLowercase = Character.toLowerCase(character);
         final int asciiValue;
         final boolean isCharacterLowercase = Character.isLowerCase(character);
@@ -60,6 +77,7 @@ public class DataFun extends beaUtils {
         String characterStatus;
         String isVowel;
         String suffix;
+        String alphabeticalStatus;
         int alphabeticalPlacement;
 
         asciiValue = character;
@@ -94,14 +112,15 @@ public class DataFun extends beaUtils {
             };
         }
 
-        System.out.println(character + characterStatus + isVowel + "its ASCII value is " + CHOSEN_COLOR + asciiValue + RESET + ",\nand it is the " + CHOSEN_COLOR + alphabeticalPlacement + suffix + RESET + " letter of the alphabet");
+        alphabeticalStatus = Character.isLetter(character) ? CHOSEN_COLOR + alphabeticalPlacement + suffix + RESET + " letter of the alphabet" : "is " + CHOSEN_COLOR + "not present "+ RESET + "in the alphabet";
+        return (character + characterStatus + isVowel + "its ASCII value is " + CHOSEN_COLOR + asciiValue + RESET + ",\nand it is the " + alphabeticalStatus);
 
     }
 
     private static String pollForColor() {
         String color;
 
-        color = askForThing("Enter a color to act as a theme, \n(AVAILABLE: Red, Green, Yellow, Blue, Purple, Cyan, White):", Scanner::next, scanner);
+        color = askForThing("Enter a color to act as a theme, \n(AVAILABLE: Red, Green, Yellow, Blue, Purple, Cyan, Grey):", Scanner::next, scanner);
         color = switch (color.trim().toLowerCase()) {
             case "red" -> RED;
             case "green" -> GREEN;
@@ -109,10 +128,10 @@ public class DataFun extends beaUtils {
             case "blue" -> BLUE;
             case "purple" -> PURPLE;
             case "cyan" -> CYAN;
-            case "white" -> WHITE;
+            case "grey" -> GREY;
             default -> {
                 System.out.println("Color not recognized, defaulting to white.");
-                yield WHITE;
+                yield GREY;
             }
         };
         return color;
@@ -120,7 +139,7 @@ public class DataFun extends beaUtils {
 
     public static void main(String[] args) {
         String chosenColor = pollForColor();
-        partOne(askForThing("Enter your favorite integer: ", Scanner::nextInt, scanner), chosenColor);
-        partTwo(askForThing("Enter your favorite character", Scanner::next, scanner).charAt(0), chosenColor);
+        System.out.println(partOne(askForThing("Enter your favorite integer: ", Scanner::nextInt, scanner), chosenColor));
+        System.out.println(partTwo(askForThing("Enter your favorite character", Scanner::next, scanner).charAt(0), chosenColor));
     }
 }
