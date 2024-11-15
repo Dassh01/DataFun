@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 /**
  * Data Fun
+ * @author Beatrice Gilfix
  * @version [11/12/2024]
  */
 
@@ -100,6 +101,7 @@ public class DataFun extends beaUtils {
 
         isVowel = characterLowercase == 'a' || characterLowercase == 'e' || characterLowercase == 'i' || characterLowercase == 'o' || characterLowercase == 'u' ? "it is a " + CHOSEN_COLOR + "vowel" + RESET + ",\n" : "it is a " + CHOSEN_COLOR + "consonant" + RESET + ",\n";
 
+        //Handle suffix
         if (alphabeticalPlacement == 11 || alphabeticalPlacement == 12 || alphabeticalPlacement == 13) {
             suffix = "th";
         }
@@ -112,16 +114,22 @@ public class DataFun extends beaUtils {
             };
         }
 
+        //Final catch handling the last message in part two if character isn't in the alphabet
         alphabeticalStatus = Character.isLetter(character) ? CHOSEN_COLOR + alphabeticalPlacement + suffix + RESET + " letter of the alphabet" : "is " + CHOSEN_COLOR + "not present "+ RESET + "in the alphabet";
+
         return (character + characterStatus + isVowel + "its ASCII value is " + CHOSEN_COLOR + asciiValue + RESET + ",\nand it is the " + alphabeticalStatus);
 
     }
 
-    private static String pollForColor() {
+    /**
+     * Handles polling for the color
+     * @param userColorRequest User's request for color theme as an unformatted string (string formatting is handled in-method)
+     * @return Returns respective color ANSI code to be fed into partOne/Two
+     */
+    private static String pollForColor(String userColorRequest) {
         String color;
 
-        color = askForThing("Enter a color to act as a theme, \n(AVAILABLE: Red, Green, Yellow, Blue, Purple, Cyan, Grey):", Scanner::next, scanner);
-        color = switch (color.trim().toLowerCase()) {
+        color = switch (userColorRequest.trim().toLowerCase()) {
             case "red" -> RED;
             case "green" -> GREEN;
             case "yellow" -> YELLOW;
@@ -138,7 +146,7 @@ public class DataFun extends beaUtils {
     }
 
     public static void main(String[] args) {
-        String chosenColor = pollForColor();
+        String chosenColor = pollForColor(askForThing("Enter a color to act as a theme, \n(AVAILABLE: Red, Green, Yellow, Blue, Purple, Cyan, Grey):", Scanner::next, scanner));
         System.out.println(partOne(askForThing("Enter your favorite integer: ", Scanner::nextInt, scanner), chosenColor));
         System.out.println(partTwo(askForThing("Enter your favorite character", Scanner::next, scanner).charAt(0), chosenColor));
     }
